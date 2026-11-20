@@ -6,7 +6,6 @@ import java.util.Iterator;
 public class TileMapRenderer {
 
     private static final int TILE_SIZE = 64;
-    private static final int TILE_SIZE_BITS = 6;
 
     private Image background;
 
@@ -15,13 +14,11 @@ public class TileMapRenderer {
     }
 
     public static int pixelsToTiles(int pixels) {
-        // use shifting to get correct values for negative pixels
-        return pixels >> TILE_SIZE_BITS;
+        return (int)Math.floor((float)pixels / TILE_SIZE);
     }
 
     public static int tilesToPixels(int numTiles) {
-        // no real reason to use shifting here.
-        return numTiles << TILE_SIZE_BITS;
+        return numTiles * TILE_SIZE;
     }
 
     public void setBackground(Image background) {
@@ -39,12 +36,10 @@ public class TileMapRenderer {
             g.drawRect(0, 0, screenWidth, screenHeight);
         }
 
-        // draw player
-        /*
         g.drawImage(player.getImage(),
                 Math.round(player.getX()),
                 Math.round(player.getY()),
-                null); */
+                null);
 
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x <= map.getWidth(); x++) {

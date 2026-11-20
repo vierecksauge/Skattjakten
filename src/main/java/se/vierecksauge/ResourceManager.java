@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class ResourceManager {
@@ -13,9 +14,12 @@ public class ResourceManager {
     private int currentMap;
     private GraphicsConfiguration gc;
 
+    private Sprite playerSprite;
+
     public ResourceManager(GraphicsConfiguration gc) {
         this.gc = gc;
         loadTileImages();
+        loadEntitySprites();
     }
 
     public Image loadImage(String name) {
@@ -118,6 +122,11 @@ public class ResourceManager {
             }
         }
 
+        Sprite player = (Sprite)playerSprite.clone();
+        player.setX(0);
+        player.setY(0);
+        newMap.setPlayer(player);
+
         return newMap;
     }
 
@@ -143,6 +152,29 @@ public class ResourceManager {
             tiles.add(loadImage(name));
             ch++;
         }
+    }
+
+    public void loadEntitySprites() {
+        Image[] playerFrames = new Image[]{
+            loadImage("player1.png"),
+            loadImage("player2.png"),
+            loadImage("Player3.png"),
+        };
+        Animation playerAnim = createPlayerAnim(playerFrames[0], playerFrames[1], playerFrames[2]);
+        playerSprite = new Player(playerAnim);
+    }
+
+    private Animation createPlayerAnim(Image player1,
+                                       Image player2, Image player3)
+    {
+        Animation anim = new Animation();
+        anim.addFrame(player1, 250);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player1, 150);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player3, 200);
+        anim.addFrame(player2, 150);
+        return anim;
     }
 
 }

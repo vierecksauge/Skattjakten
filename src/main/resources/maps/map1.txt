@@ -3,8 +3,6 @@
 # The tiles are:
 #   (Space) Empty tile
 #   A...Z    Tiles A through Z
-AAAAAAAAAAA
-AAA      AA
-A
-A
-ABBBBBBBBAA
+  AAA
+  AAAA
+ BBBB

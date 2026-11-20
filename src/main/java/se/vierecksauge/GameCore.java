@@ -37,10 +37,13 @@ public abstract class GameCore {
             double currentTime = System.nanoTime();
 
             while (isRunning) {
-                double elapsedTime = (System.nanoTime() - currentTime) / 1_000_000.0;
-                currentTime += elapsedTime;
+                long newTime = System.nanoTime();
 
-                update(elapsedTime);
+                double deltaTime = (newTime - currentTime) / 1_000_000.0;
+
+                currentTime = newTime;
+
+                update(deltaTime);
 
                 Graphics2D g = screen.getGraphics();
                 if (g != null) {
@@ -49,11 +52,6 @@ public abstract class GameCore {
                 }
 
                 screen.update();
-
-                try {
-                    Thread.sleep(2000);
-                }
-                catch (InterruptedException ex) { }
             }
         }
 

@@ -7,14 +7,14 @@ public class Animation {
 
     private ArrayList frames;
     private int currFrameIndex;
-    private long animTime;
-    private long totalDuration;
+    private double animTime;
+    private double totalDuration;
 
     public Animation() {
         this(new ArrayList(), 0);
     }
 
-    private Animation(ArrayList frames, long totalDuration) {
+    private Animation(ArrayList frames, double totalDuration) {
         this.frames = frames;
         this.totalDuration = totalDuration;
         start();
@@ -24,7 +24,7 @@ public class Animation {
         return new Animation(frames, totalDuration);
     }
 
-    public synchronized void addFrame(Image image, long duration) {
+    public synchronized void addFrame(Image image, double duration) {
         totalDuration += duration;
         frames.add(new AnimFrame(image, totalDuration));
     }
@@ -56,6 +56,10 @@ public class Animation {
         return (AnimFrame) frames.get(index);
     }
 
+    public synchronized int getCurrentFrameIndex() {
+        return currFrameIndex;
+    }
+
     public synchronized void start() {
         animTime = 0;
         currFrameIndex = 0;
@@ -63,9 +67,9 @@ public class Animation {
 
     private class AnimFrame {
         Image image;
-        long endTime;
+        double endTime;
 
-        public AnimFrame(Image image, long endTime) {
+        public AnimFrame(Image image, double endTime) {
             this.image = image;
             this.endTime = endTime;
         }
